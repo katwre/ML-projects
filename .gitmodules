@@ -1,0 +1,3 @@
+[submodule "survival_analysis_multiple_myeloma"]
+	path = survival_analysis_multiple_myeloma
+	url = git@github.com:katwre/survival_analysis.git
