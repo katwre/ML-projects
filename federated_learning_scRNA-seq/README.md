@@ -40,7 +40,7 @@ The first panel shows the **raw UMAP embeddings** of pancreas single-cell data b
 - **Left (tech):** Cells are separated mainly by **sequencing technology** (Celseq2 vs Smartseq2), indicating strong **technology-driven batch effects**.
 - **Right (celltype):** While some cell-type structure is visible, the separation by technology dominates, making downstream analyses unreliable.
 
-![Gene Expression UMAP](Gene Expression UMAP.png)
+![Gene Expression UMAP](Gene_Expression_UMAP.png)
 
 ---
 
@@ -50,7 +50,7 @@ The second panel shows UMAP embeddings after training a **centralized scVI model
 - **Left (tech):** Cells from different sequencing technologies are well-mixed, demonstrating that the **centralized model successfully removes batch effects**.
 - **Right (celltype):** Clear, compact clusters of known pancreas cell types emerge, indicating improved biological signal recovery.
 
-![SCVI UMAP Centralized Model](SCVI UMAP Centralized Model.png)
+![SCVI UMAP Centralized Model](SCVI_UMAP_Centralized_Model.png)
 
 ---
 
@@ -60,7 +60,7 @@ The third panel shows UMAP embeddings after training the **same scVI model** in 
 - **Left (tech):** Batch effects are substantially reduced compared to the baseline, though slightly less effectively than in the centralized model.
 - **Right (celltype):** Distinct cell-type clusters are recovered, demonstrating that the federated approach preserves biological structure **without requiring raw data sharing**.
 
-![SCVI UMAP Federated Model](SCVI UMAP Federated Model.png)
+![SCVI UMAP Federated Model](SCVI_UMAP_Federated_Model.png)
 
 ---
 
@@ -74,6 +74,6 @@ The final plot shows the **global weighted loss** across five federated training
 
 ---
 
-## Summary of Findings
+## Summary
 - The **federated scVI model** achieves **comparable performance** while maintaining **data privacy**.
 - Federated learning is therefore a viable strategy for multi-institutional single-cell studies where **data sharing is restricted**.
