@@ -34,6 +34,8 @@ flwr run .
 
 # Results
 
+The models_comparison.ipynb notebook contains the comparison of baseline (traditional/centralized) and federated learning methods.
+
 ## 1. Baseline Gene Expression UMAP
 The first panel shows the **raw UMAP embeddings** of pancreas single-cell data before any batch-effect correction:
 
@@ -65,9 +67,9 @@ The third panel shows UMAP embeddings after training the **same scVI model** in 
 ---
 
 ## 4. Federated Training and Validation Loss
-The final plot shows the **global weighted loss** across five federated training rounds:
+The final plot shows the global weighted loss across five federated training rounds:
 
-- Both **training** and **validation losses** decrease steadily, indicating stable convergence.
+- Both training and validation losses decrease steadily, indicating stable convergence.
 - The gap between the two curves remains small, suggesting that the federated model generalizes well and does **not overfit**.
 
 ![Loss Plot](loss_plot.png)
@@ -75,5 +77,5 @@ The final plot shows the **global weighted loss** across five federated training
 ---
 
 ## Summary
-- The **federated scVI model** achieves **comparable performance** while maintaining **data privacy**.
-- Federated learning is therefore a viable strategy for multi-institutional single-cell studies where **data sharing is restricted**.
+- The federated scVI model achieves comparable performance while maintaining data privacy.
+- Federated learning is therefore a viable strategy for multi-institutional single-cell studies where data sharing is restricted.
