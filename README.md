@@ -7,4 +7,4 @@ A collection of my machine learning mini-projects exploring deep learning and da
 - **Survival analysis** with clinical and gene expression data (survival_analysis_multiple_myeloma)
 - Minimal **federated learning workflow** to compute a weighted mean of the per-site gene variances to identify the most variable genes (federated_learning_minimal)
 - **Variational autoencoder** approach to mitigate batch effects in scRNA-seq using **federated learning** simulations (federated_learning_scRNA-seq)
-- minimal Retrieval-Augmented Generation (RAG): sentence-transformers + FLAN-T5 (haystack_minimal)
+- minimal Retrieval-Augmented Generation (RAG): sentence-transformers + FLAN-T5 (RAG_minimal)
