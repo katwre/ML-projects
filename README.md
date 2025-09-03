@@ -8,3 +8,4 @@ A collection of my machine learning mini-projects exploring deep learning and da
 5. Minimal **federated learning workflow** to compute a weighted mean of the per-site gene variances to identify the most variable genes (federated_learning_minimal)
 6. **Variational autoencoder** approach to mitigate batch effects in scRNA-seq using **federated learning** simulations (federated_learning_scRNA-seq)
 7. minimal **Retrieval-Augmented Generation** (RAG): sentence-transformers + FLAN-T5 and also applied in bioinformatics (RAG_minimal)
+8. minimal Bayesian State Space Model (SSM_minial)
