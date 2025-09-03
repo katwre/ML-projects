@@ -11,27 +11,4 @@ The goal is to demonstrate, step by step, how to:
 
 ---
 
-### **1. Setup and Dependencies**
-
-We install and import the required libraries:
-- (**PyMC**)[https://www.pymc.io/] → Bayesian modeling and inference
-- **ArviZ** → posterior analysis and visualization
-- **Matplotlib** → plotting results
-
-
-### **2. Defining a Simple Linear State-Space Model**
-
-We start by simulating data from a deterministic linear trend with Gaussian noise:
-
-$$
-y_t \sim \mathcal{N}(\alpha + \beta t,\ \sigma^2)
-$$
-
-Where:
-- $\alpha$ → baseline level at $t=0$
-- $\beta$ → slope over time
-- $\sigma$ → observation noise
-- $y_t$ → observed or simulated data
-
-We define priors for $\alpha$, $\beta$, and $\sigma$, and then specify the model using **PyMC**.
 
