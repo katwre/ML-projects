@@ -64,6 +64,5 @@ Semantic search is valuable for:
 - Supporting researchers who may not know exact column names or annotation terms.
 - Laying the groundwork for retrieval-augmented genomics assistants that combine structured data with scientific literature.
 
-By integrating Haystack with our input data `variants.tsv`, we bridge the gap between structured genomics data and LLM-powered exploration, enabling interactive and scalable bioinformatics analysis.
 
 
