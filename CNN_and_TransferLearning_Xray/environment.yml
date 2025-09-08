@@ -1,6 +1,5 @@
 name: xray-cnn
 channels:
-  - pytorch
   - conda-forge
   - defaults
 dependencies:
@@ -11,9 +10,9 @@ dependencies:
   - seaborn
   - pytorch
   - torchvision
-  - cpuonly  # replace with 'pytorch-cuda=12.1' (and remove this) if you have an NVIDIA GPU & drivers
+  - cpuonly
   - jupyterlab
   - ipykernel
   - pip
-  - pip:
-      - pytorch-model-summary
+  - scikit-learn
+prefix: /home/katwre/miniforge3/envs/xray-cnn
