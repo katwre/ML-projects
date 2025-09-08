@@ -1,0 +1,19 @@
+name: xray-cnn
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - pytorch
+  - torchvision
+  - cpuonly  # replace with 'pytorch-cuda=12.1' (and remove this) if you have an NVIDIA GPU & drivers
+  - jupyterlab
+  - ipykernel
+  - pip
+  - pip:
+      - pytorch-model-summary
