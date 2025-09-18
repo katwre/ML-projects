@@ -62,6 +62,18 @@ This allows the model to capture complex, non-linear patterns in methylation dat
 Performance was evaluated by comparing predicted proportions against the ground truth using **mean absolute error (MAE)**.  
 The approach was inspired by *MethylNet* ([Levy et al., 2020](https://doi.org/10.1186/s12859-020-3443-8)).  
 
+
+### Semi-supervised NMF
+
+To further improve performance, I implemented **semi-supervised non-negative matrix factorization (ssNMF)**.  
+Unlike purely unsupervised NMF, ssNMF incorporates prior knowledge from reference methylation profiles by anchoring part of the factorization to known cell type signatures.  
+
+- This helps guide the decomposition toward biologically meaningful solutions.  
+- The reference matrix constrains the model, while the sample-specific factors remain flexible to capture variability.  
+- As a result, ssNMF can balance interpretability with robustness against noise and collinearity.  
+
+In practice, ssNMF produced the most accurate estimates, outperforming both regression-based methods and the VAE under noisy and complex conditions.
+
 ---
 
 ## Results  
@@ -74,4 +86,8 @@ The approach was inspired by *MethylNet* ([Levy et al., 2020](https://doi.org/10
 
 - **VAE model** reconstructed methylation profiles and predicted proportions.  
   - Achieved test MAE of **0.21–0.22**.  
-  - Captured overall trends but sometimes spread predictions across multiple cell types, even when truth was sparse.  
+  - Captured overall trends but sometimes spread predictions across multiple cell types, even when truth was sparse. 
+
+- **Semi-supervised NMF**  
+  - By incorporating reference information into the factorization, ssNMF guided the decomposition toward biologically meaningful solutions.  
+  - In this experiment, ssNMF produced the most accurate and stable estimates, outperforming both regression and VAE approaches.  
