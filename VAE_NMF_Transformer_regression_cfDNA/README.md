@@ -74,6 +74,11 @@ Unlike purely unsupervised NMF, ssNMF incorporates prior knowledge from referenc
 
 In practice, ssNMF produced the most accurate estimates, outperforming both regression-based methods and the VAE under noisy and complex conditions.
 
+
+### Transformer
+
+Finally, I implemented a tiny **Transformer-based model** for deconvolution, treating each CpG region as a token in a sequence. Each token was represented by its region identity (learned embedding) and methylation beta value (linear projection). The model uses a transformer encoder with self-attention layers to capture dependencies between CpG regions across the genome. The encoder outputs are pooled to produce a sample-level embedding, which is passed through a feed-forward network with softmax activation to predict cell type proportions. In addition to predicting proportions, the model learns a basis matrix \(W\) (CpGs × cell types) that is initialized from the reference matrix \(R\) and regularized to remain close to it (anchor loss). The overall loss function combines reconstruction error (\(\|Y - WH\|^2\)) and anchoring penalty (\(\|W - R\|^2\)), with gradients jointly updating the Transformer parameters and \(W\). Training was performed with AdamW optimization, mini-batching, and random subsampling of CpGs to improve efficiency. This architecture is designed to integrate CpG-level sequence context while leveraging prior reference information, providing a flexible hybrid between regression and NMF approaches.
+
 ---
 
 ## Results  
@@ -91,3 +96,7 @@ In practice, ssNMF produced the most accurate estimates, outperforming both regr
 - **Semi-supervised NMF**  
   - By incorporating reference information into the factorization, ssNMF guided the decomposition toward biologically meaningful solutions.  
   - In this experiment, ssNMF produced the most accurate and stable estimates, outperforming both regression and VAE approaches.  
+
+- **Transformer**
+  - Compared to regression and VAE approaches, the transformer provided a flexible sequence-based architecture, though its performance was somewhat lower than semi-supervised NMF in this setting, and needs further investigation
+  - It might be that attention-based models are a promising direction for integrating CpG-level structure, particularly with larger training sets or richer reference information, this is just a tiny example that I could run on my laptop.
