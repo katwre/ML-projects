@@ -19,3 +19,5 @@ A collection of my machine learning mini-projects exploring deep learning and da
 8. minimal Bayesian State Space Model (SSM_minimal)
 
 9. Variational autoencoder (**VAE**), minimal **BERT language model/transformer**, semi-supervised **NMF** and regression-based methods (lasso, ridge regression, elastic net) for the cell type deconvolution (VAE_NMF_Transformer_regression_cfDNA)
+
+10. **LLM-powered SPARQL Bioinformatics Assistant** - uses a language model to turn biology questions into SPARQL queries, run them on UniProt/OMA/Bgee, and explain the results (llm_biodata)

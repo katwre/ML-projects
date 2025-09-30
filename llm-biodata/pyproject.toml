@@ -1,0 +1,14 @@
+[project]
+name = "tutorial-biodata-agent"
+version = "0.0.1"
+requires-python = "==3.12.*"
+dependencies = [
+    "sparql-llm >=0.0.8",
+    "langchain >=0.3.27",
+    "langchain-mistralai >=0.2.12",
+    "langchain-groq >=0.3.8",
+    "langchain-ollama >=0.3.8",
+    "qdrant-client >=1.15.1",
+    "fastembed >=0.7.3",
+    "chainlit >=2.8.1",
+]
