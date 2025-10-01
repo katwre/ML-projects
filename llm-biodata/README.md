@@ -33,11 +33,22 @@ Here's how it works step by step:
 You can interact with the assistant either in the terminal/CLI or through a simple chat web app (Chainlit web UI).
 
 
+### Set up
+
+1. Install `uv` to easily handle dependencies and run scripts (https://docs.astral.sh/uv/getting-started/installation/).
+
+2. Create a `.env` file with the API key for the LLM provider you will use:
+```bash
+MISTRAL_API_KEY=YYY
+GROQ_API_KEY=YYY
+```
 
 ### Example query
 
-User: What are the rat orthologs of human TP53?
-
+User's example query:
+```bash
+What are the rat orthologs of human TP53?
+```
 
 ### To programmatically query LLM run it with:
 ```bash
