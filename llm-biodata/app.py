@@ -13,7 +13,17 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 
 ## 1. Set up LLM provider
 
+# Load an LLM
 def load_chat_model(model: str) -> BaseChatModel:
+    """
+    Load an LLM.
+
+    Pick the right LangChain chat wrapper and sets sensible defaults 
+    (temperature=0 → deterministic; max_tokens=1024).
+    A LangChain chat wrapper = a standardized Python class (and JS) that hides the messy 
+    provider-specific details and givesthe same simple API across different LLM backends
+    and providers (OpenAI, Mistral, Groq, Ollama, etc.).
+    """
     provider, model_name = model.split("/", maxsplit=1)
     if provider == "mistralai":
         # https://python.langchain.com/docs/integrations/chat/mistralai/
@@ -40,6 +50,9 @@ def load_chat_model(model: str) -> BaseChatModel:
 
     raise ValueError(f"Unknown provider: {provider}")
 
+## Pick a model
+# Ollama = runs models locally. For Mistral/Groq we'd need API keys.
+##
 # Model Mistral
 # llm = load_chat_model("mistralai/mistral-small-latest")
 # Model Llama
@@ -54,10 +67,18 @@ from fastembed import TextEmbedding
 from qdrant_client import QdrantClient
 
 ### Set up vector database for document retrieval
-embedding_model = TextEmbedding("BAAI/bge-small-en-v1.5")
+embedding_model = TextEmbedding("BAAI/bge-small-en-v1.5") # turns text → 384-dim vectors
 embedding_dimensions = 384
 collection_name = "sparql-docs"
-vectordb = QdrantClient(path="data/vectordb")
+vectordb = QdrantClient(path="data/vectordb") # create local Qdrant store on disk
+
+# Qdrant is a vector database. Instead of storing and searching normal data 
+# (like names, numbers, rows in SQL), it stores vectors (lists of numbers, e.g. [0.23, -0.77, 1.02, …])
+# Those vectors usually come from an embedding model — a neural network that turns text into numbers 
+# that capture its meaning. Example: “cat” and “kitten” → two vectors close together in vector space.
+# “cat” and “car” → vectors further apart.
+# So, we ask Qdrant: “which vectors are closest to this new one?” It does fast nearest-neighbor 
+# search using algorithms optimized for millions of vectors.
 
 from langchain_core.documents import Document
 from qdrant_client.http.models import Distance, VectorParams
@@ -88,11 +109,27 @@ def index_endpoints():
     docs += SparqlInfoLoader(endpoints, source_iri="https://www.expasy.org/").load()
 
     # Load documents in vectordb
+    # to build a retrieval memory of examples and schemas, 
+    # so we can automatically fetch the most relevant context 
+    # for each user question before asking the LLM to generate a query
+    #
+    # LLM is bad at remembering or searching large amounts of text. Instead of giving the LLM 
+    # all possible examples every time, we:
+    # - Upload documents (examples, schemas) into Qdrant once.
+    # - At runtime, when a user asks a question:
+    # - Embed the question into a vector.
+    # - Ask Qdrant: “Which stored docs are most similar to this question?”
+    # - Qdrant quickly finds the 3–5 most relevant examples.
+    # - Give only those relevant examples to the LLM inside the system prompt.
+    # This makes the LLM’s job easier → it can base its query generation on actual real examples, not just its “imagination.”
+
+
     if vectordb.collection_exists(collection_name):
         vectordb.delete_collection(collection_name)
     vectordb.create_collection(
         collection_name=collection_name,
-        vectors_config=VectorParams(size=embedding_dimensions, distance=Distance.COSINE),
+        vectors_config=VectorParams(size=embedding_dimensions, 
+                                    distance=Distance.COSINE),
     )
     embeddings = embedding_model.embed([q.page_content for q in docs])
     vectordb.upload_collection(
@@ -125,11 +162,15 @@ else:
 
 
 ## 3. Set up document retrieval, and pass relevant context to the system prompt
+# Retrieve the most relevant docs for a user question
 
 from qdrant_client.models import FieldCondition, Filter, MatchValue, ScoredPoint
 retrieved_docs_count = 3
 def retrieve_docs(question: str) -> list[ScoredPoint]:
-    """Retrieve documents relevant to the user's question."""
+    """
+    Retrieve documents relevant to the user's question.
+    It embeds the user’s question and asks Qdrant for the nearest examples and class shapes.
+    """
     question_embeddings = next(iter(embedding_model.embed([question])))
     retrieved_docs = vectordb.query_points(
         collection_name=collection_name,
@@ -178,7 +219,31 @@ Here is a list of documents (reference questions and query answers, classes sche
 
 
 ## 4. Automatically execute generated query and interpret results
-## Execute generated SPARQL query
+
+# Execute generated SPARQL query -> SPARQL = bridge between LLM and the real databases
+# SPARQL (pronounced “sparkle”) is a query language, like SQL but for RDF data (Resource Description Framework)
+# RDF is a way to store knowledge as triples, e.g.:
+# Subject     Predicate     Object
+# "TP53"      "ortholog"    "Trp53" (rat)
+# SPARQL lets us ask questions over these triples, often hosted in SPARQL endpoints (special databases accessible via HTTP).
+# we need SPARQL queries because many biological databases expose their data through SPARQL endpoints:
+# UniProt (proteins, sequences, annotations)
+# OMA Browser (orthologs / evolutionary relationships)
+# Bgee (gene expression in species)
+# 
+# Why not just ask the LLM directly? An LLM like Mistral doesn’t have live access to UniProt or OMA. It only “knows” 
+# what was in its training data (static, possibly outdated).
+# If we ask: “What are the rat orthologs of human TP53?”
+# The LLM might hallucinate an answer. But if it generates a correct SPARQL query, your system can run it against OMA’s 
+# endpoint and fetch the real, up-to-date data, and many others in the life sciences.
+# SPARQL example:
+# #+ endpoint: https://sparql.omabrowser.org/sparql/
+# SELECT ?ratGene WHERE {
+#   ?humanGene a orth:Gene ;
+#              rdfs:label "TP53" ;
+#             orth:orthologous ?ratGene .
+#   ?ratGene orth:inSpecies "Rattus norvegicus" .
+#}
 
 from sparql_llm.validate_sparql import extract_sparql_queries
 from sparql_llm.utils import query_sparql

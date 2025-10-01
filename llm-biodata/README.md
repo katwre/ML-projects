@@ -1,6 +1,9 @@
 # Introduction
 
-This project is an AI-powered assistant that helps researchers ask questions about biology in plain English and automatically turns them into SPARQL queries against public databases (UniProt, OMA, Bgee).
+This project is an AI-powered assistant that helps researchers ask questions about biology in plain English and automatically turns them into SPARQL queries against public databases:
+- UniProt (proteins, sequences, annotations), 
+- OMA (orthologs / evolutionary relationships), 
+- Bgee (gene expression in species)
 
 The assistant is powered by LLMs (Mistral, Llama via Groq, Ollama) combined with retrieval-augmented generation (RAG) using Qdrant and FastEmbed.
 
@@ -17,13 +20,13 @@ Here's how it works step by step:
 
 1. Ask a question – You type a biology question in natural language.
 
-2. Find examples – The system looks up similar example queries stored in a small database (Qdrant).
+2. Find examples – The system looks up similar example queries stored in a small database (Qdrant). Builds a mini "memory" (a vector database) of SPARQL examples and schemas from a few endpoints.
 
 3. Generate a SPARQL query – A language model (LLM) uses these examples to write a new query.
 
 4. Check the query – The system makes sure the query uses only one database and has the right format.
 
-5. Run the query – The query is executed on a real SPARQL endpoint (like UniProt or OMA).
+5. Run the query – The query is executed on a real SPARQL endpoint (like UniProt or OMA). Extract the generated query, validate it (must be single-endpoint, with an #+ endpoint: line), and run it. If it fails or returns nothing, ask the LLM to fix it. If it works, ask the LLM to summarize the rows.
 
 6. Summarize the results – The results are returned and explained in plain text for easier understanding.
 
