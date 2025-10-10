@@ -2,7 +2,7 @@ seed: 42
 num_workers: 4
 
 paths:
-  data_dir: data/chest_xray_224   # or: data/chest_xray_63
+  data_dir: data/chest_xray_224   # or: data/chest_xray_64
   out_dir: outputs/
 
 train:
@@ -12,3 +12,15 @@ train:
   weight_decay: 0.0001
   mixed_precision: false     # keep false for BCELoss+Sigmoid simplicity
   early_stop_patience: 25
+
+model:
+  kind: cnn          # "cnn" or "tl"
+  # cnn-only:
+  kernel_size: 16
+  stride: 4
+  use_leakyrelu: false
+  input_size: 224 # or 64
+#  # tl-only:
+#  backbone: resnet50
+#  pretrained: true
+#  freeze_backbone: true

@@ -2,7 +2,7 @@
 
 Chest X-ray imaging is a critical diagnostic tool in detecting various pulmonary diseases. However, manual interpretation of chest X-rays can be time-consuming and prone to variability between radiologists. To address these challenges, deep learning techniques - particularly **Convolutional Neural Networks (CNNs)** - have been widely adopted for automated medical image analysis due to their ability to learn hierarchical visual features directly from data.
 
-In this project, a CNN was developed to classify chest X-ray images using relatively small 224x224 and also 64×64 pixel inputs, aiming to explore whether lightweight models can still retain sufficient diagnostic power for image-based classification tasks. Beyond training a basic CNN from scratch, **transfer learning** was employed by leveraging pretrained convolutional backbones such as ResNet, to assess whether pretrained models can further enhance classification performance when applied to chest X-ray images.
+In this project, a CNN was developed to classify chest X-ray images using relatively small 224x224 and also 64×64 pixel inputs, aiming to explore whether lightweight models can still retain sufficient diagnostic power for image-based classification tasks. Beyond training a basic CNN from scratch, **transfer learning** was employed by leveraging pretrained convolutional backbones such as ResNet, to assess whether pre-trained models can further enhance classification performance when applied to chest X-ray images.
 
 The objective was to compare the effectiveness of a simple CNN versus a transfer learning approach, focusing on model generalization, convergence speed, and performance on a limited dataset.
 
@@ -18,8 +18,8 @@ from [Kermany et al. 2018](https://www.sciencedirect.com/science/article/pii/S00
 | <img alt='a sample normal chest x-ray from Kermany et al. 2018' src='data/NORMAL-1003233-0001.jpeg' width="400"> | <img alt='a pneumonia normal chest x-ray from Kermany et al. 2018' src='data/BACTERIA-1008087-0001.jpeg' width="400"> |
  
 
+Here is a refresher on CNN: [CNN cheatsheet](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-convolutional-neural-networks), and an amazing video [lecture](https://www.youtube.com/watch?v=oGpzWAlP5p0). 
 
-Here is a refresher on CNN: [CNN cheatsheet](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-convolutional-neural-networks).
 
 ## Transfer Learning
 
@@ -156,7 +156,7 @@ python -m src.train --num_workers 4 --batch_size 64
 
 Checkpoints & outputs:
 
-- Best model: outputs/cnn_best.pt
+- Best model: outputs/cnn_best_{model}.pt
 - Metrics printed at the end of each epoch
 - Early stopping based on validation loss
 
@@ -175,13 +175,38 @@ Set `model.name` in `config.yaml` to `resnet50` or `efficientnet_b0` (if support
 
 # Results
 
-The first CNN trained on 64×64 resized chest X-ray images achieved a training accuracy of approximately 92% and a validation accuracy of around 82–83%. The model demonstrated good generalization, with early stopping triggered after 10-12 epochs to prevent overfitting. The BCE loss curve showed stable convergence, with validation loss increasing slightly after early stopping, suggesting that the model benefited from regularization. Overall, this baseline network performed well using relatively small input images, confirming that 64×64 resizing preserves enough relevant features for accurate classification.
+## Baseline CNN (from scratch)
+
+A custom CNN was trained on 64×64 grayscale chest X-ray images to evaluate how well a lightweight architecture could learn from limited-resolution data.
+
+- Training accuracy: ~92%
+- Validation accuracy: ~82–83%
+- Early stopping: triggered after 10–12 epochs to prevent overfitting
+- Loss behavior: Binary cross-entropy (BCE) loss showed smooth convergence, with mild validation loss increase post–early stopping — a sign of good regularization.
+
+Despite the reduced image resolution, the model retained enough discriminative signal to perform robustly. This confirmed that key diagnostic patterns (e.g., opacities or asymmetries) remain visible even after aggressive downsampling.
 
 
-To further improve performance, transfer learning was applied using a pretrained ResNet backbone combined with a custom classifier head (Deep_LR). This approach allowed the model to converge faster and generalize better than training from scratch. Initial evaluation at the default decision threshold of 0.5 produced a strong ROC-AUC of 0.834 but misclassified all NORMAL cases as PNEUMONIA due to probability outputs being skewed above 0.5. By tuning the classification threshold using Youden’s J statistic (optimal cutoff ≈0.6865), the model achieved balanced performance:
+## Transfer Learning (ResNet + Deep Head)
 
-- **NORMAL**: precision 0.681, recall 0.739, F1 0.709  
-- **PNEUMONIA**: precision 0.835, recall 0.792, F1 0.813  
-- **Overall accuracy**: 77.2%  
 
-Transfer learning not only improved generalization but, after threshold adjustment, provided clinically meaningful sensitivity and specificity, demonstrating the utility of pretrained visual representations for chest X-ray classification.
+To further enhance generalization and convergence speed, transfer learning was applied using a pretrained ResNet backbone paired with a custom fully connected head (Deep_LR).The pretrained visual features significantly improved model stability and sensitivity to pneumonia-related patterns.
+
+Initial evaluation with the default threshold (0.5) produced a ROC–AUC of 0.834, but the probability outputs were skewed toward the pneumonia class, misclassifying most normal cases. After tuning the decision threshold via Youden’s J statistic (optimal cutoff ≈ 0.6865), performance became well-balanced:
+
+| Class     | Precision | Recall |    F1 |
+| --------- | --------: | -----: | ----: |
+| NORMAL    |     0.681 |  0.739 | 0.709 |
+| PNEUMONIA |     0.835 |  0.792 | 0.813 |
+
+
+- Overall accuracy: 77.2%
+- ROC–AUC: 0.834
+
+
+## Take-aways
+
+- Even a simple CNN can effectively learn from low-resolution (64×64) medical images.
+- Transfer learning provides faster convergence and better generalization, especially for small datasets.
+- Threshold calibration is crucial in medical AI — improving class balance and clinical interpretability.
+- Pretrained representations from natural images (like ResNet) can transfer well to medical imaging tasks after minimal adaptation.
