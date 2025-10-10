@@ -38,17 +38,29 @@ The base model I will re-use is [ResNet50](https://pytorch.org/vision/main/model
 
 Project structure:
 ```{bash}
-├── config.yaml
+├── config.yaml # config file fi you'd like to run it from terminal
 ├── data/
 │   ├── chest_xray_224/
 │   │   ├── train/ NORMAL/ PNEUMONIA/
 │   │   └── test/  NORMAL/ PNEUMONIA/
-│   └── chest_xray_63/      # optional smaller dataset
-└── src/
-    ├── data.py             # dataset + dataloaders
-    ├── model.py            # CNN model definition
-    ├── train.py            # training loop
-    └── eval.py             # evaluation loop
+│   └── chest_xray_64/            # optional smaller dataset
+│
+├── notebooks/
+│   ├── CNN_playground.ipynb   # training + visualization for small CNN
+│   ├── TransferLearning_plyaground.ipynb # TL with ResNet + Deep_LR head
+│
+├── outputs/
+│   ├── cnn_best_64x64.pt               # trained CNN weights
+│   └── loss_history_64x64.csv
+│
+├── src/
+│   ├── data.py                   # dataset + dataloaders
+│   ├── model.py                  # CNN + TL model definitions
+│   ├── train.py                  # training logic
+│   └── eval.py                   # evaluation + metrics
+│
+├── README.md
+├── environment.yml
 ```
 
 
