@@ -81,6 +81,24 @@ Finally, I implemented a tiny **Transformer-based model** for deconvolution, tre
 
 ---
 
+## Set-up
+
+```{bash}
+project/
+├── notebooks/
+│   └── simulated_data_model.ipynb
+├── src/
+│   ├── models.py
+│   ├── train.py
+│   ├── eval.py
+│   └── data.py
+├── enviroment.yaml
+└── README.md
+```
+
+
+
+
 ## Results  
 
 - **Regression methods** (NNLS, ridge, lasso, elastic net) recovered cell type proportions.  
