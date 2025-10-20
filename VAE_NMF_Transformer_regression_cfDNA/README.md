@@ -91,12 +91,12 @@ project/
 │   ├── data.py
 │   ├── train.py
 │   ├── eval.py
-│   └── models
+│   └── models/
 │       ├── nmf.py
 │       ├── regression.py
 │       ├── transformer.py
 │       └── vae.py
-│   └── viz
+│   └── viz/
 │       └── transformer.py
 ├── enviroment.yaml
 └── README.md
