@@ -88,10 +88,16 @@ project/
 ├── notebooks/
 │   └── simulated_data_model.ipynb
 ├── src/
-│   ├── models.py
+│   ├── data.py
 │   ├── train.py
 │   ├── eval.py
-│   └── data.py
+│   └── models
+│       ├── nmf.py
+│       ├── regression.py
+│       ├── transformer.py
+│       └── vae.py
+│   └── viz
+│       └── transformer.py
 ├── enviroment.yaml
 └── README.md
 ```
