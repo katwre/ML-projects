@@ -1,7 +1,9 @@
 # ML-projects
 
+A collection of my machine learning mini-projects exploring deep learning and data science methods, including:
+
 | Project | Folder | Link |
-|------------|--------|--------|
+|---------------|-----|--------|
 | 1. **Autoencoders** for dimensionality reduction and data imputation | autoencoder_scRNA-seq | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/autoencoder_scRNAseq) |
 | 2. **Convolutional Neural Networks (CNNs)** and **transfer learning** for image classification tasks based on chest X-rays | CNN_and_TransferLearning_Xray | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/CNN_and_TransferLearning_Xray) |
 | 3. **Survival analysis** with clinical and gene expression data | survival_analysis_multiple_myeloma | [🔗 Link](https://github.com/katwre/survival_analysis/tree/main) |
