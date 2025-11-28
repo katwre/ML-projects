@@ -15,6 +15,8 @@ A collection of my machine learning mini-projects exploring deep learning and da
 | 9. **LLM-powered SPARQL Bioinformatics Assistant** - uses a language model to turn biology questions into SPARQL queries, run them on UniProt/OMA/Bgee, and explain the results¹ | llm-biodata | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/llm-biodata) |
 | 10. **GNNs** for spatial transcriptomics | GNN_spatialomics | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/GNN_spatialomics) |
 
+------------------
 
 ¹Implemented as part of the workshops at the [PyData conference 2025 in Berlin](https://pydata.org/berlin2025)
+
 ²Implemented as the result of the [Swiss Institute of Bioinformatics (SIB) workshop Federated Learning in Bioinformatics](https://www.sib.swiss/training/course/20250829_FEDBX)
