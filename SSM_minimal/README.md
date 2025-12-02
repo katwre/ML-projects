@@ -1,4 +1,4 @@
-# Introduction to State-Space Models (SSMs) with PyMC
+# Introduction to State-Space Models (SSMs) with PyMC¹
 
 This notebook is a hands-on introduction to **State-Space Models (SSMs)** using [PyMC](https://www.pymc.io/), [ArviZ](https://python.arviz.org/), and [Matplotlib](https://matplotlib.org/).  
 It walks through the Bayesian workflow step by step - from simple models to more flexible, realistic ones.
@@ -93,3 +93,5 @@ This model:
 ---
 
 This notebook provides an intuitive foundation for working with **Bayesian state-space models** and sets the stage for more advanced topics like Kalman filters, hierarchical SSMs, and deep probabilistic forecasting.
+
+¹Implemented as part of the workshops at the [PyData conference 2025 in Berlin](https://pydata.org/berlin2025)
