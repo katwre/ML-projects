@@ -14,9 +14,12 @@ A collection of my machine learning mini-projects exploring deep learning and da
 | 8. Variational autoencoder (**VAE**), minimal **BERT language model/transformer**, semi-supervised **NMF** and regression-based methods (lasso, ridge regression, elastic net) for the cell type deconvolution | VAE_NMF_Transformer_regression_cfDNA | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/VAE_NMF_Transformer_regression_cfDNA) |
 | 9. **LLM-powered SPARQL Bioinformatics Assistant** - uses a language model to turn biology questions into SPARQL queries, run them on UniProt/OMA/Bgee, and explain the results¹ | llm-biodata | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/llm-biodata) |
 | 10. **GNNs** for spatial transcriptomics | GNN_spatialomics | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/GNN_spatialomics) |
+| 12. Introduction to bayesian **A/B Testing** with a beta-binomial model (PyMC)³ | Bayesian_inference_ABtesting_PyMC | [🔗 Link](https://github.com/katwre/ML-projects/tree/main/Bayesian_inference_ABtesting_PyMC) |
 
 ------------------
 
 ¹Implemented as part of the workshops at the [PyData conference 2025 in Berlin](https://pydata.org/berlin2025)
 
 ²Implemented as the result of the [Swiss Institute of Bioinformatics (SIB) workshop Federated Learning in Bioinformatics](https://www.sib.swiss/training/course/20250829_FEDBX)
+
+³Implemented as part of the workshops at the [PyData Global conference 2025](https://pydata.org/global2025)
