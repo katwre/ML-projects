@@ -24,5 +24,5 @@ A collection of my machine learning mini-projects exploring deep learning and da
 
 ³Implemented as part of the workshops at the [PyData Global conference 2025](https://pydata.org/global2025)
 
-⁴Implemented as part of the workshops at the [Swiss Institute of Bioinformatics (SIB) workshop Using Large Language Models for Biodata Exploration: From Theory to Practice]([https://pydata.org/berlin2025](https://www.sib.swiss/training/course/20250519_USLLM))
+⁴Implemented as part of the workshops at the [Swiss Institute of Bioinformatics (SIB) workshop Using Large Language Models for Biodata Exploration: From Theory to Practice](https://www.sib.swiss/training/course/20250519_USLLM)
 
